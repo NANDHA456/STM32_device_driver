@@ -112,6 +112,20 @@ typedef struct
 #define GPIO_AFR_MAXSIZE   		0xf
 #define GPIO_AFR_SHIFT_BITS 	0x4
 
+
+
+/*SYSCFG RELATED MACROS */
+
+typedef struct
+{
+	volatile uint32_t MEMRMP;     //memory remap register
+	volatile uint32_t PMC;	      //Peripheral Mode Config Register
+};
+
+/*SYSCFG_BASE_ADDR
+ *
+ */
+#define SYSCFG_BASE_ADDR 0x4001800U
  
  
  #endif
