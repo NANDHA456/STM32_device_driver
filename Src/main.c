@@ -17,13 +17,13 @@
  */
 
 #include <stdint.h>
-
-#if !defined(__SOFT_FP__) && defined(__ARM_FP)
-  #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
-#endif
+#include "stm32f411xe.h"
+#include "GPIO_driver.h"
+#include "RCC_Driver.h"
 
 int main(void)
 {
+	//SCB->CPACR |= (3UL << 20) | (3UL << 22);
     /* Loop forever */
 	for(;;);
 }
