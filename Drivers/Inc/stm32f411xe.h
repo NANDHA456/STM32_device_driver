@@ -113,19 +113,58 @@ typedef struct
 #define GPIO_AFR_SHIFT_BITS 	0x4
 
 
+/*EXTI Register Structure*/
+typedef struct
+{
+	uint32_t IMR;              //Interrupt mask register
+	uint32_t EMR;			   //Event mask register
+	uint32_t RTSR;			   //Rising trigger selection register
+	uint32_t FTSR;			   //Falling trigger selection register
+	uint32_t SWIER;			   //Software interrupt event register
+	uint32_t PR;			   //Pending register
+}EXTI_RefDef;
+
+/*Macro related to EXTI Peripherals*/
+#define EXTI_BASEADDR 0x40013C00U
+#define EXTI 		  ((EXTI_RefDef *) EXTI_BASEADDR) /*EXTI Pointer to Structure macro*/
+
+/*EXTI interrupt number*/
+#define EXTI0_IRQn		6
+#define EXTI1_IRQn		7
+#define EXTI2_IRQn		8
+#define EXTI4_IRQn		9
+#define EXTI5_IRQn		10
+#define EXTI5_9_IRQn	23
+#define EXTI10_15_IRQn  40
 
 /*SYSCFG RELATED MACROS */
-
 typedef struct
 {
 	volatile uint32_t MEMRMP;     //memory remap register
-	volatile uint32_t PMC;	      //Peripheral Mode Config Register
-};
+	volatile uint32_t PMC;        //Peripheral Mode Config Register
+	volatile uint32_t EXTICR[4];  //ALL 16 External INterrupt in array format
+  //volatile uint32_t EXTICR2;
+  //volatile uint32_t EXTICR3;
+  //volatile uint32_t EXTICR4;
+	volatile uint32_t RESERVED[2];
+	volatile uint32_t CMPCR;
+}SYSCFG_RegDef;
 
-/*SYSCFG_BASE_ADDR
- *
- */
-#define SYSCFG_BASE_ADDR 0x4001800U
- 
- 
+/*SYSCFG_BASE_ADDR*/
+#define SYSCFG_BASE_ADDR 0x40013800U
+/*SYSCFG Pointer to Struct macro*/
+#define SYSCFG			 ((SYSCFG_RegDef *) SYSCFG_BASE_ADDR)
+
+ /*NVIC related macros*/
+#define NVIC_BASEADDR 		0xE00E100U
+
+#define NVIC_ISERx_BASE		((volatile uint32_t*)NVIC_BASEADDR)
+#define NVIC_ICERx_BASE     ((volatile uint32_t*)NVIC_BASEADDR + 0x00000080U)
+#define NVIC_ISPRx_BASE     ((volatile uint32_t*)NVIC_BASEADDR + 0x00000100U)
+#define NVIC_ICPRx_BASE     ((volatile uint32_t*)NVIC_BASEADDR + 0x00000180U)
+#define NVIC_IABRx_BASE     ((volatile uint32_t*)NVIC_BASEADDR + 0x00000200U)
+#define NVIC_ICERx_BASE     ((volatile uint32_t*)NVIC_BASEADDR + 0x00000300U)
+
+
+
  #endif
