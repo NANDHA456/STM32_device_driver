@@ -1,7 +1,7 @@
 #ifndef STM32F411XE_H
 #define STM32F411XE_H
 #include <stdint.h>
-
+#include <stdbool.h>
 /*Macro related to all peripheral address, sram , flash address 
  *Data structure related to peripherals
  *Peripherals bit definitions */
@@ -163,7 +163,8 @@ typedef struct
 #define NVIC_ISPRx_BASE     ((volatile uint32_t*)NVIC_BASEADDR + 0x00000100U)
 #define NVIC_ICPRx_BASE     ((volatile uint32_t*)NVIC_BASEADDR + 0x00000180U)
 #define NVIC_IABRx_BASE     ((volatile uint32_t*)NVIC_BASEADDR + 0x00000200U)
-#define NVIC_ICERx_BASE     ((volatile uint32_t*)NVIC_BASEADDR + 0x00000300U)
+#define NVIC_IPRx_BASE      ((volatile uint8_t*)NVIC_BASEADDR + 0x00000300U)
+
 
 
 

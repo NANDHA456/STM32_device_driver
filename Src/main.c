@@ -17,13 +17,62 @@
  */
 
 #include <stdint.h>
+#include "stdbool.h"
 #include "stm32f411xe.h"
 #include "GPIO_driver.h"
 #include "RCC_Driver.h"
+#include "NVIC_Driver.h"
+#include "EXTI_Driver.h"
+#include "SYSCFG_Driver.h"
+
+GPIO_PINCONFIG_T RedLed =
+{
+		.pin  = 14,
+		.mode = GPIO_MODE_OUTPUT,
+		.otype= GPIO_OTYPE_PP,
+		.speed=GPIO_SPEED_LOW,
+		.pupdr=GPIO_NO_PULL,
+		.alternatefunc=0
+
+};
+
+GPIO_PINCONFIG_T Button =
+{
+		.pin  = 0,
+		.mode = GPIO_MODE_INPUT,
+		.otype= GPIO_OTYPE_OD,
+		.speed=GPIO_SPEED_LOW,
+		.pupdr=GPIO_NO_PULL,
+		.alternatefunc=0
+
+};
 
 int main(void)
 {
 	//SCB->CPACR |= (3UL << 20) | (3UL << 22);
-    /* Loop forever */
-	for(;;);
+    /*Enabling of GPIO pin port A*/
+	RCC_EnableGPIO(GPIOA);
+
+	/*Enabling of LED port CLock - port -D*/
+	RCC_EnableGPIO(GPIOD);
+	/*INITIALIZE LED*/
+	GPIO_Init(GPIOA, &RedLed);
+
+    /*Initialize button*/
+	GPIO_Init(GPIOD, &Button);
+
+	SYSCFG_SetEXTISource(0, 0);
+
+	EXTI_EnableInterrupt(0, EXTI_TRIGGER_RISING);
+
+	NVIC_EnableIRQ(EXTI0_IRQn);
+
 }
+void EXTI0_IRQHandler()
+{
+	if(EXTI_IsPending(0) == 1){
+		GPIO_TogglePin(GPIOD, 14);
+		EXTI_ClearPending(0);
+	}
+}
+

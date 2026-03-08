@@ -4,6 +4,6 @@
 #include "stm32f411xe.h"
 #include "stdint.h"
 
-void SYSCFG_SetEXITISource(uint8_t EXTILine, uint8_t EXITLineVal);
+void SYSCFG_SetEXTISource(uint8_t EXTILine, uint8_t EXTILineVal);
 
 #endif
